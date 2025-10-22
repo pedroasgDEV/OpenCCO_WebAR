@@ -1,0 +1,6 @@
+*.o
+*.exe
+*.glb
+*.vtk
+.vscode
+bin
