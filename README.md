@@ -7,7 +7,7 @@ This project is focus on augmented visualization of arterial trees modeled by Op
 ```
 ../
 ├── data/               # .json files
-├── obj/               # .glb files
+├── obj/                # .glb files
 ├── docs/               # .html files
 ├── src/                # source files
 └── tests/              # test files
