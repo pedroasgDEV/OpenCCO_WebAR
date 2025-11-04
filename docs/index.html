@@ -151,27 +151,27 @@
 
             <div id="legenda-ar-overlay" ar-overlay></div>
 
-        </model-viewer>
+            <div class="selecao-modelos" ar-overlay>
+                <div class="radio-item">
+                    <input type="radio" id="btnModelo1" name="modelo_selecao"
+                        data-modelo="43.gltf" checked>
+                    <label for="btnModelo1">Modelo Padrão</label>
+                </div>
+                
+                <div class="radio-item">
+                    <input type="radio" id="btnModelo2" name="modelo_selecao"
+                        data-modelo="43_flow.gltf" data-legenda="legenda_flow.png">
+                    <label for="btnModelo2">Fluxo Sanguíneo</label>
+                </div>
+                
+                <div class="radio-item">
+                    <input type="radio" id="btnModelo3" name="modelo_selecao"
+                        data-modelo="43_res.gltf" data-legenda="legenda_res.png">
+                    <label for="btnModelo3">Resistencia Hemodinâmica</label>
+                </div>
+            </div>
 
-        <div class="selecao-modelos" ar-overlay>
-            <div class="radio-item">
-                <input type="radio" id="btnModelo1" name="modelo_selecao"
-                       data-modelo="43.gltf" checked>
-                <label for="btnModelo1">Modelo Padrão</label>
-            </div>
-            
-            <div class="radio-item">
-                <input type="radio" id="btnModelo2" name="modelo_selecao"
-                       data-modelo="43_flow.gltf" data-legenda="legenda_flow.png">
-                <label for="btnModelo2">Fluxo Sanguíneo</label>
-            </div>
-            
-            <div class="radio-item">
-                <input type="radio" id="btnModelo3" name="modelo_selecao"
-                       data-modelo="43_res.gltf" data-legenda="legenda_res.png">
-                <label for="btnModelo3">Resistencia Hemodinâmica</label>
-            </div>
-        </div>
+        </model-viewer>
 
     </div>
 
