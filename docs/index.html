@@ -93,6 +93,31 @@
             background-color: #000000;
         }
 
+        .ar-button {
+            position: fixed; /* Fixo na tela */
+            bottom: 20px;
+            right: 20px; /* Canto inferior direito */
+            z-index: 11; /* Acima da seleção de modelos e legenda */
+            padding: 12px 20px;
+            font-size: 1.1em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 30px; /* Estilo de pílula */
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex; /* Para centralizar o ícone e texto, se houver */
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* Espaço entre texto e possível ícone */
+            text-decoration: none; /* Remove sublinhado se for um <a> */
+        }
+
+        .ar-button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
 
         #legenda-ar-overlay {
             position: fixed;
@@ -131,6 +156,13 @@
                 width: 8px;
                 height: 8px;
             }
+
+            .ar-button {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px 18px;
+                font-size: 1em;
+            }
         }
     </style>
 </head>
@@ -148,6 +180,10 @@
             auto-rotate
         >
             <button slot="ar-failure">AR não é suportado neste dispositivo</button>
+
+            <button slot="ar-button" class="ar-button">
+                Ver em AR
+            </button>
 
             <div id="legenda-ar-overlay" ar-overlay></div>
 
