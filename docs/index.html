@@ -14,14 +14,14 @@
             flex-direction: column;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
-            background-color: #f8f8f8;
+            overflow: hidden; 
+            background-color: #f8f8f8; 
         }
 
         .container-visualizador {
             position: relative;
             width: 100%;
-            height: 100vh;
+            height: 80vh; 
             margin: 0 auto;
         }
 
@@ -31,71 +31,60 @@
         }
 
         .selecao-modelos {
-            display: none; 
+            width: 100%;
+            height: 20vh; 
+            display: flex;
+            flex-direction: row; 
+            flex-wrap: wrap;     
+            justify-content: center; 
+            align-items: center;
+            gap: 10px;           
+            background-color: #e0e0e0; 
+            border-top: 1px solid #bbb;
+            padding: 10px;       
+            box-sizing: border-box;
         }
 
-        @media (max-width: 768px) { 
+        .selecao-modelos button {
+            flex-grow: 1; 
+            max-width: 30%; 
+            min-width: 100px;
+            padding: 12px 15px; 
+            font-size: 1em; 
+            cursor: pointer;
+            border: none; 
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .selecao-modelos button:hover {
+            background-color: #0056b3;
+            transform: translateY(-1px); 
+        }
+
+        .selecao-modelos button.ativo {
+            background-color: #0056b3;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3); 
+        }
+
+        @media (max-width: 600px) {
             .selecao-modelos {
-                display: flex; 
-                position: fixed; 
-                bottom: 15px; 
-                left: 15px;  
-                flex-direction: column; 
-                justify-content: flex-end; 
-                align-items: flex-start;
+                flex-direction: row; 
+                justify-content: space-around;
+                align-items: center;
                 gap: 8px; 
-                padding: 10px;
-                z-index: 10; 
-                background-color: transparent;
-                box-shadow: none;
-                border: none; 
-                width: auto; 
-                max-width: 80%; 
+                padding: 8px;
             }
 
             .selecao-modelos button {
-                display: flex;
-                align-items: center;
-                gap: 6px; 
-                width: auto; /* Largura se ajusta ao conteúdo */
-                padding: 6px 10px; /* Padding menor */
-                font-size: 0.9em; /* Fonte menor */
-                cursor: pointer;
-                border: 1px solid rgba(255, 255, 255, 0.4); /* Borda clara semi-transparente */
-                background-color: rgba(0, 0, 0, 0.3); /* Fundo escuro semi-transparente */
-                color: white; /* Texto branco */
-                border-radius: 20px; /* Cantos bem arredondados para parecer uma pílula */
-                transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-                text-align: left;
-                backdrop-filter: blur(3px); /* Efeito de desfoque por trás */
-            }
-
-            .selecao-modelos button:hover {
-                background-color: rgba(0, 0, 0, 0.5); /* Fundo mais escuro no hover */
-                border-color: rgba(255, 255, 255, 0.6);
-            }
-
-            .selecao-modelos button.ativo {
-                background-color: #007bff; /* Cor ativa mais vibrante */
-                border-color: #007bff;
-                font-weight: bold;
-                color: white;
-            }
-
-            /* Estilo para a "bolinha" */
-            .selecao-modelos button .bolinha {
-                display: inline-block;
-                width: 10px; /* Bolinha menor */
-                height: 10px;
-                background-color: #bbb; /* Cor padrão da bolinha */
-                border-radius: 50%;
-                border: none; /* Bolinha sem borda */
-                flex-shrink: 0;
-            }
-
-            .selecao-modelos button.ativo .bolinha {
-                background-color: white; /* Bolinha branca quando ativo */
-                border-color: white;
+                flex-basis: 30%; 
+                max-width: unset; 
+                font-size: 0.9em;
+                padding: 10px 8px;
             }
         }
 
@@ -103,11 +92,11 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            width: 110px;        
-            height: 220px;      
+            width: 110px;         
+            height: 220px;        
             z-index: 10;
             pointer-events: none;
-            background-image: none; /* CORRIGIDO: sem imagem de fundo por padrão */
+            background-image: url('legenda2.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -121,14 +110,13 @@
                 right: 10px;
             }
         }
-
     </style>
 </head>
 <body>
     <div class="container-visualizador">
         
         <model-viewer 
-            id="modelo3D"
+            id="modelo3D" 
             src="43.gltf"
             alt="Modelo 3D Interativo"
             ar
@@ -143,18 +131,12 @@
 
         </model-viewer>
 
-        <div class="selecao-modelos">
-            <button id="btnModelo1" class="ativo" data-modelo="43.gltf">
-                <span class="bolinha"></span> Modelo Padrão
-            </button> 
-            <button id="btnModelo2" data-modelo="43_flow.gltf" data-legenda="legenda_flow.png">
-                <span class="bolinha"></span> Distribuição de Fluxo Sanguíneo
-            </button>
-            <button id="btnModelo3" data-modelo="43_res.gltf" data-legenda="legenda_res.png">
-                <span class="bolinha"></span> Resistencia de Cada Segmento
-            </button>
-        </div>
+    </div>
 
+    <div class="selecao-modelos">
+        <button id="btnModelo1" class="ativo" data-modelo="43.gltf">Modelo Padrão</button> 
+        <button id="btnModelo2" data-modelo="43_flow.gltf" data-legenda="legenda_flow.png">Distribuição do fluxo sanguíneo</button>
+        <button id="btnModelo3" data-modelo="43_res.gltf" data-legenda="legenda_res.png">Distribuição da resistência</button>
     </div>
 
     <script>
@@ -167,10 +149,9 @@
 
             if (legendaSrc) {
                 legendaOverlay.style.backgroundImage = `url('${legendaSrc}')`;
-                legendaOverlay.style.display = 'block'; // Mostra a legenda
+                legendaOverlay.style.display = 'block'; 
             } else {
-                legendaOverlay.style.backgroundImage = 'none'; // CORRIGIDO: remove a imagem de fundo
-                legendaOverlay.style.display = 'none'; // Esconde a legenda
+                legendaOverlay.style.display = 'none'; 
             }
         }
 
@@ -179,13 +160,14 @@
             selecionarModelo(modeloInicialBtn.dataset.modelo, modeloInicialBtn.dataset.legenda);
         });
 
+
         botoesSelecao.forEach(button => {
             button.addEventListener('click', () => {
                 botoesSelecao.forEach(btn => btn.classList.remove('ativo'));
                 button.classList.add('ativo');
 
                 const novoModeloSrc = button.dataset.modelo;
-                const novaLegendaSrc = button.dataset.legenda; 
+                const novaLegendaSrc = button.dataset.legenda;
 
                 selecionarModelo(novoModeloSrc, novaLegendaSrc);
             });
