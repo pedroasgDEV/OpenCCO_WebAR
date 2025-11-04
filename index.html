@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador AR</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; 
+            background-color: white; 
+        }
+
+        .container-visualizador {
+            position: relative;
+            width: 100%;
+            height: 90vh; 
+            margin: 0 auto;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 100%;
+        }
+
+        .selecao-modelos {
+            position: fixed; 
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px; 
+            z-index: 10;
+            background-color: white; 
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .selecao-modelos input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            margin: 0;
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .selecao-modelos label {
+            font-size: 1em;
+            color: black; 
+            text-shadow: 0 1px 3px rgb(255, 255, 255); 
+            padding-left: 30px; 
+            position: relative;
+            cursor: pointer;
+        }
+
+        .selecao-modelos label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            box-sizing: border-box;
+        }
+        
+        .selecao-modelos input[type="radio"]:checked + label::after {
+            content: '';
+            position: absolute;
+            left: 6px; 
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #000000;
+        }
+
+
+        #legenda-ar-overlay {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 110px;        
+            height: 220px;      
+            z-index: 10;
+            pointer-events: none;
+            background-image: none; 
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        @media (max-width: 600px) {
+            #legenda-ar-overlay {
+                width: 90px;
+                height: 180px;
+                top: 10px;
+                left: 10px;
+            }
+
+            .selecao-modelos label {
+                font-size: 0.9em; 
+                padding-left: 28px;
+            }
+
+            .selecao-modelos label::before {
+                width: 16px;
+                height: 16px;
+            }
+
+            .selecao-modelos input[type="radio"]:checked + label::after {
+                left: 5px;
+                width: 8px;
+                height: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-visualizador">
+        
+        <model-viewer 
+            id="modelo3D"
+            src="43.gltf"
+            alt="Modelo 3D Interativo"
+            ar
+            ar-modes="webxr"
+            xr-spatial-tracking="stationary" 
+            camera-controls
+            auto-rotate
+        >
+            <button slot="ar-failure">AR não é suportado neste dispositivo</button>
+
+            <div id="legenda-ar-overlay" ar-overlay></div>
+
+            <div class="selecao-modelos" ar-overlay>
+                <div class="radio-item">
+                    <input type="radio" id="btnModelo1" name="modelo_selecao"
+                        data-modelo="43.gltf" checked>
+                    <label for="btnModelo1">Modelo Padrão</label>
+                </div>
+                
+                <div class="radio-item">
+                    <input type="radio" id="btnModelo2" name="modelo_selecao"
+                        data-modelo="43_flow.gltf" data-legenda="legenda_flow.png">
+                    <label for="btnModelo2">Fluxo Sanguíneo</label>
+                </div>
+                
+                <div class="radio-item">
+                    <input type="radio" id="btnModelo3" name="modelo_selecao"
+                        data-modelo="43_res.gltf" data-legenda="legenda_res.png">
+                    <label for="btnModelo3">Resistencia Hemodinâmica</label>
+                </div>
+            </div>
+
+        </model-viewer>
+
+    </div>
+
+    <script>
+        const modelViewer = document.getElementById('modelo3D');
+        const legendaOverlay = document.getElementById('legenda-ar-overlay');
+        const botoesSelecao = document.querySelectorAll('.selecao-modelos input[type="radio"]');
+
+        function selecionarModelo(modeloSrc, legendaSrc) {
+            modelViewer.src = modeloSrc;
+
+            if (legendaSrc) {
+                legendaOverlay.style.backgroundImage = `url('${legendaSrc}')`;
+                legendaOverlay.style.display = 'block'; 
+            } else {
+                legendaOverlay.style.backgroundImage = 'none';
+                legendaOverlay.style.display = 'none'; 
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const modeloInicialBtn = document.querySelector('.selecao-modelos input[type="radio"]:checked');
+            if (modeloInicialBtn) {
+                selecionarModelo(modeloInicialBtn.dataset.modelo, modeloInicialBtn.dataset.legenda);
+            }
+        });
+
+        botoesSelecao.forEach(radio => {
+            radio.addEventListener('change', () => {
+                const novoModeloSrc = radio.dataset.modelo;
+                const novaLegendaSrc = radio.dataset.legenda; 
+
+                selecionarModelo(novoModeloSrc, novaLegendaSrc);
+            });
+        });
+    </script>
+</body>
+</html>
