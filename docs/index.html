@@ -67,33 +67,6 @@
             cursor: pointer;
         }
 
-        .selecao-modelos label::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 18px;
-            height: 18px;
-            border: 2px solid #ccc;
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            box-sizing: border-box;
-        }
-        
-        .selecao-modelos input[type="radio"]:checked + label::after {
-            content: '';
-            position: absolute;
-            left: 6px; 
-            top: 50%;
-            transform: translateY(-50%);
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #000000;
-        }
-
-
         #legenda-ar-overlay {
             position: fixed;
             top: 15px;
@@ -113,24 +86,12 @@
                 width: 90px;
                 height: 180px;
                 top: 10px;
-                right: 10px;
-                left: auto;
+                left: 10px;
             }
 
             .selecao-modelos label {
                 font-size: 0.9em; 
                 padding-left: 28px;
-            }
-
-            .selecao-modelos label::before {
-                width: 16px;
-                height: 16px;
-            }
-
-            .selecao-modelos input[type="radio"]:checked + label::after {
-                left: 5px;
-                width: 8px;
-                height: 8px;
             }
         }
     </style>
