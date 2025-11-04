@@ -21,7 +21,7 @@
         .container-visualizador {
             position: relative;
             width: 100%;
-            height: 100vh; /* Visualizador ocupa a tela inteira */
+            height: 100vh; 
             margin: 0 auto;
         }
 
@@ -30,17 +30,15 @@
             height: 100%;
         }
 
-        /* --- NOVO ESTILO PARA A LISTA DE SELEÇÃO --- */
-
         .selecao-modelos {
-            position: fixed; /* Fixo na tela */
+            position: fixed; 
             bottom: 20px;
             left: 20px;
             display: flex;
-            flex-direction: column; /* Lista vertical */
-            gap: 12px; /* Espaço entre os itens */
+            flex-direction: column;
+            gap: 12px; 
             z-index: 10;
-            background-color: transparent; /* Sem fundo */
+            background-color: transparent; 
         }
 
         .radio-item {
@@ -50,7 +48,6 @@
             position: relative;
         }
 
-        /* Esconde o botão de rádio real */
         .selecao-modelos input[type="radio"] {
             appearance: none;
             -webkit-appearance: none;
@@ -63,15 +60,13 @@
         /* O texto (label) */
         .selecao-modelos label {
             font-size: 1em;
-            color: white; /* Texto branco para melhor contraste */
-            /* Sombra para legibilidade contra o fundo 3D */
-            text-shadow: 0 1px 3px rgba(0,0,0,0.6); 
-            padding-left: 30px; /* Espaço para a bolinha customizada */
+            color: black; 
+            text-shadow: 0 1px 3px rgb(255, 255, 255); 
+            padding-left: 30px; 
             position: relative;
             cursor: pointer;
         }
 
-        /* A "bolinha vazia" customizada (baseada na sua imagem) */
         .selecao-modelos label::before {
             content: '';
             position: absolute;
@@ -86,33 +81,28 @@
             box-sizing: border-box;
         }
         
-        /* A "bolinha dentro" quando selecionado */
         .selecao-modelos input[type="radio"]:checked + label::after {
             content: '';
             position: absolute;
-            left: 6px; /* Centraliza o pingo */
+            left: 6px; 
             top: 50%;
             transform: translateY(-50%);
-            width: 8px; /* Tamanho do pingo */
+            width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: #555; /* Cor do pingo */
+            background-color: #000000;
         }
 
-        /* --- FIM DO NOVO ESTILO --- */
 
-
-        /* LEGENDA MOVIDA PARA O CANTO SUPERIOR DIREITO */
         #legenda-ar-overlay {
-            position: fixed; /* Mudei para 'fixed' para acompanhar a tela */
+            position: fixed;
             top: 15px;
-            right: 15px; /* Movido para a DIREITA */
-            left: auto;  /* Limpa a posição da esquerda */
+            left: 15px;
             width: 110px;        
             height: 220px;      
             z-index: 10;
             pointer-events: none;
-            background-image: none; /* JS vai cuidar disso */
+            background-image: none; 
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -123,12 +113,12 @@
                 width: 90px;
                 height: 180px;
                 top: 10px;
-                right: 10px; /* Movido para a DIREITA */
+                right: 10px;
                 left: auto;
             }
 
             .selecao-modelos label {
-                font-size: 0.9em; /* Fonte um pouco menor no mobile */
+                font-size: 0.9em; 
                 padding-left: 28px;
             }
 
@@ -174,13 +164,13 @@
             <div class="radio-item">
                 <input type="radio" id="btnModelo2" name="modelo_selecao"
                        data-modelo="43_flow.gltf" data-legenda="legenda_flow.png">
-                <label for="btnModelo2">Distribuição do fluxo sanguíneo</label>
+                <label for="btnModelo2">Fluxo Sanguíneo</label>
             </div>
             
             <div class="radio-item">
                 <input type="radio" id="btnModelo3" name="modelo_selecao"
                        data-modelo="43_res.gltf" data-legenda="legenda_res.png">
-                <label for="btnModelo3">Distribuição da resistência</label>
+                <label for="btnModelo3">Resistencia Hemodinâmica</label>
             </div>
         </div>
 
@@ -189,7 +179,6 @@
     <script>
         const modelViewer = document.getElementById('modelo3D');
         const legendaOverlay = document.getElementById('legenda-ar-overlay');
-        // Agora seleciona os INPUTS de rádio
         const botoesSelecao = document.querySelectorAll('.selecao-modelos input[type="radio"]');
 
         function selecionarModelo(modeloSrc, legendaSrc) {
@@ -199,12 +188,11 @@
                 legendaOverlay.style.backgroundImage = `url('${legendaSrc}')`;
                 legendaOverlay.style.display = 'block'; 
             } else {
-                legendaOverlay.style.backgroundImage = 'none'; // Limpa a imagem se não houver legenda
+                legendaOverlay.style.backgroundImage = 'none';
                 legendaOverlay.style.display = 'none'; 
             }
         }
 
-        // Ao carregar, pega o rádio que já está marcado (checked)
         document.addEventListener('DOMContentLoaded', () => {
             const modeloInicialBtn = document.querySelector('.selecao-modelos input[type="radio"]:checked');
             if (modeloInicialBtn) {
@@ -212,14 +200,8 @@
             }
         });
 
-        // Adiciona o listener de 'change' para cada rádio
         botoesSelecao.forEach(radio => {
             radio.addEventListener('change', () => {
-                // Não é mais
-                // necessário adicionar/remover classe 'ativo',
-                // o CSS :checked cuida disso.
-
-                // Apenas pegamos os dados do rádio que foi alterado (o 'radio' atual)
                 const novoModeloSrc = radio.dataset.modelo;
                 const novaLegendaSrc = radio.dataset.legenda; 
 
