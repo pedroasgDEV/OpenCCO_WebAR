@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador AR</title>
+    <title>Visualizador AR </title>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
     <style>
         body {
@@ -14,15 +14,16 @@
             flex-direction: column;
             align-items: center;
             height: 100vh;
-            overflow: hidden; 
-            background-color: #f8f8f8; 
+            overflow: hidden;
+            background-color: #f8f8f8;
         }
 
         .container-visualizador {
             position: relative;
             width: 100%;
-            height: 80vh; 
+            height: 90vh; 
             margin: 0 auto;
+            display: flex; 
         }
 
         model-viewer {
@@ -31,69 +32,72 @@
         }
 
         .selecao-modelos {
-            width: 100%;
-            height: 20vh; 
+            position: absolute; 
+            top: 0;
+            left: 0; 
+            height: 100%;
             display: flex;
-            flex-direction: row; 
-            flex-wrap: wrap;     
+            flex-direction: column;
             justify-content: center; 
-            align-items: center;
-            gap: 10px;           
-            background-color: #e0e0e0; 
-            border-top: 1px solid #bbb;
-            padding: 10px;       
+            align-items: flex-start;
+            gap: 15px; 
+            padding: 20px 10px; 
             box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.8); 
+            z-index: 10;
+            border-right: 1px solid rgba(0,0,0,0.1); 
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1); 
+            width: 160px; 
         }
 
         .selecao-modelos button {
-            flex-grow: 1; 
-            max-width: 30%; 
-            min-width: 100px;
-            padding: 12px 15px; 
-            font-size: 1em; 
+            display: flex;
+            align-items: center;
+            gap: 8px; 
+            width: 100%; 
+            padding: 10px 12px; 
+            font-size: 1em;
             cursor: pointer;
-            border: none; 
-            background-color: #007bff;
-            color: white;
-            border-radius: 8px;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border: none;
+            background-color: transparent; 
+            color: #333;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            text-align: left;
         }
 
         .selecao-modelos button:hover {
-            background-color: #0056b3;
-            transform: translateY(-1px); 
+            background-color: rgba(0, 0, 0, 0.05); 
+            color: #007bff;
         }
 
         .selecao-modelos button.ativo {
-            background-color: #0056b3;
+            background-color: #e0e0e0; 
             font-weight: bold;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.3); 
+            color: #0056b3;
         }
 
-        @media (max-width: 600px) {
-            .selecao-modelos {
-                flex-direction: row; 
-                justify-content: space-around;
-                align-items: center;
-                gap: 8px; 
-                padding: 8px;
-            }
+        .selecao-modelos button .bolinha {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: #888; 
+            border-radius: 50%; 
+            border: 1px solid #666;
+            flex-shrink: 0;
+        }
 
-            .selecao-modelos button {
-                flex-basis: 30%; 
-                max-width: unset; 
-                font-size: 0.9em;
-                padding: 10px 8px;
-            }
+        .selecao-modelos button.ativo .bolinha {
+            background-color: #007bff; 
+            border-color: #0056b3;
         }
 
         #legenda-ar-overlay {
             position: absolute;
             top: 15px;
             right: 15px;
-            width: 110px;         
-            height: 220px;        
+            width: 110px;        
+            height: 220px;      
             z-index: 10;
             pointer-events: none;
             background-image: url('legenda2.png');
@@ -103,6 +107,20 @@
         }
 
         @media (max-width: 600px) {
+            .selecao-modelos {
+                width: 120px; 
+                padding: 10px 5px;
+                gap: 10px;
+            }
+            .selecao-modelos button {
+                font-size: 0.9em;
+                padding: 8px 10px;
+            }
+            .selecao-modelos button .bolinha {
+                width: 10px;
+                height: 10px;
+            }
+
             #legenda-ar-overlay {
                 width: 90px;
                 height: 180px;
@@ -116,7 +134,7 @@
     <div class="container-visualizador">
         
         <model-viewer 
-            id="modelo3D" 
+            id="modelo3D"
             src="43.gltf"
             alt="Modelo 3D Interativo"
             ar
@@ -131,12 +149,18 @@
 
         </model-viewer>
 
-    </div>
+        <div class="selecao-modelos">
+            <button id="btnModelo1" class="ativo" data-modelo="43.gltf">
+                <span class="bolinha"></span> Modelo Padrão
+            </button> 
+            <button id="btnModelo2" data-modelo="43_flow.gltf" data-legenda="legenda_flow.png">
+                <span class="bolinha"></span> Distribuição de Fluxo Sanguíneo
+            </button>
+            <button id="btnModelo3" data-modelo="43_res.gltf" data-legenda="legenda_res.png">
+                <span class="bolinha"></span> Resistencia de Cada Segmento
+            </button>
+        </div>
 
-    <div class="selecao-modelos">
-        <button id="btnModelo1" class="ativo" data-modelo="43.gltf">Modelo Padrão</button> 
-        <button id="btnModelo2" data-modelo="43_flow.gltf" data-legenda="legenda_flow.png">Distribuição do fluxo sanguíneo</button>
-        <button id="btnModelo3" data-modelo="43_res.gltf" data-legenda="legenda_res.png">Distribuição da resistência</button>
     </div>
 
     <script>
@@ -149,9 +173,9 @@
 
             if (legendaSrc) {
                 legendaOverlay.style.backgroundImage = `url('${legendaSrc}')`;
-                legendaOverlay.style.display = 'block'; 
+                legendaOverlay.style.display = 'block'; // Mostra a legenda
             } else {
-                legendaOverlay.style.display = 'none'; 
+                legendaOverlay.style.display = 'none'; // Esconde a legenda
             }
         }
 
@@ -160,14 +184,13 @@
             selecionarModelo(modeloInicialBtn.dataset.modelo, modeloInicialBtn.dataset.legenda);
         });
 
-
         botoesSelecao.forEach(button => {
             button.addEventListener('click', () => {
                 botoesSelecao.forEach(btn => btn.classList.remove('ativo'));
                 button.classList.add('ativo');
 
                 const novoModeloSrc = button.dataset.modelo;
-                const novaLegendaSrc = button.dataset.legenda;
+                const novaLegendaSrc = button.dataset.legenda; 
 
                 selecionarModelo(novoModeloSrc, novaLegendaSrc);
             });
